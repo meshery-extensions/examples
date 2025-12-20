@@ -25,10 +25,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "20.x"
           cache: "npm"
@@ -37,13 +37,13 @@ jobs:
         run: |
           make ui-build
       - name: Upload meshery-ui artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: meshery-ui
           retention-days: 30
           path: /home/runner/work/meshery/meshery/ui/out
       - name: Upload provider-ui artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: provider-ui
           retention-days: 30
@@ -57,11 +57,11 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Check out meshery-istio code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: layer5io/meshery-istio
           path: ./meshery-istio
@@ -71,13 +71,13 @@ jobs:
       #     repository: layer5io/meshery-consul
       #     path: ./meshery-consul
       - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1.10.0
+        uses: helm/kind-action@v1
         with:
           cluster_name: "kind-cluster"
       - name: Setup Go
         uses: actions/setup-go@master
         with:
-          go-version: "1.23"
+          go-version: "1.25"
       - name: Run meshery-istio
         run: |
           mkdir -p /home/runner/.meshery/bin
@@ -91,18 +91,18 @@ jobs:
       #     go run main.go &
       #     sleep 60
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20.x"
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
       - name: Download meshery-ui artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: meshery-ui
           path: /home/runner/work/meshery/meshery/ui/out
       - name: Download provider-ui artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: provider-ui
           path: /home/runner/work/meshery/meshery/provider-ui/out
@@ -139,7 +139,7 @@ jobs:
           retention-days: 14
       - name: Upload Test Trace
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report
           path: ui/test-results/
@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
       - name: Free disk space
@@ -185,7 +185,7 @@ jobs:
     name: swagger-docs
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Check if handlers were modified
         uses: dorny/paths-filter@v3
         id: changes
@@ -212,7 +212,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
       - name: Check if schema was modified
