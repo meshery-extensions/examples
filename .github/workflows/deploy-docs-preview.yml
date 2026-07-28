@@ -49,6 +49,16 @@ jobs:
     needs: read-metadata
     runs-on: ubuntu-24.04
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - name: Checkout PR
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: true
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
@@ -60,7 +70,7 @@ jobs:
       - name: Deploy PR preview
         uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 #1.8.1
         with:
-          source-dir: ./docs-preview-build/docs/public
+          source-dir: ./docs-preview-build/public
           qr-code: false
           action: ${{ needs.read-metadata.outputs.action == 'closed' && 'remove' || 'deploy' }}
           pr-number: ${{ needs.read-metadata.outputs.pr-number }}
