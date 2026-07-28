@@ -2,7 +2,7 @@
 title: Lab Outro
 linkTitle: Lab Outro
 weight: 11
-description: Academy theme lab-outro shortcode for storing lab introduction content.
+description: Academy theme lab-outro shortcode for rendering lab introduction content.
 draft: true
 ---
 
@@ -10,7 +10,7 @@ The `lab-outro` shortcode renders the content captured earlier by `lab-intro`, m
 
 ```text
 {{</* lab-intro */>}}
-Welcome to this hands-on lab. In this exercise, you will learn how to deploy a cloud native application using Kubernetes.
+Welcome to this hands-on lab. In this exercise, you will learn how to deploy a cloud-native application using Kubernetes.
 {{</* /lab-intro */>}}
 
 {{</* lab-outro */>}}
@@ -19,7 +19,7 @@ Welcome to this hands-on lab. In this exercise, you will learn how to deploy a c
 **Example:**
 
 {{< lab-intro >}}
-Welcome to this hands-on lab. In this exercise, you will learn how to deploy a cloud native application using Kubernetes.
+Welcome to this hands-on lab. In this exercise, you will learn how to deploy a cloud-native application using Kubernetes.
 {{< /lab-intro >}}
 
 {{< lab-outro >}}

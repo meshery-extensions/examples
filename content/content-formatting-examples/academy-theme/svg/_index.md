@@ -2,7 +2,7 @@
 title: SVG
 linkTitle: SVG
 weight: 7
-description: Academy theme svg shortcode for inline SVG icons from assets.
+description: Render an inline SVG icon, resolved from the page bundle first, then assets.
 draft: true
 ---
 
