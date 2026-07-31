@@ -42,8 +42,17 @@ jobs:
       - name: Retrieve PR metadata
         id: pr
         run: |
-          echo "PULL_REQUEST=$(cat ./docs-preview-build/pr/number)" >> "$GITHUB_OUTPUT"
-          echo "ACTION=$(cat ./docs-preview-build/pr/action)" >> "$GITHUB_OUTPUT"
+          number=$(head -n1 ./docs-preview-build/pr/number | tr -d '[:space:]')
+          case "$number" in ''|*[!0-9]*) echo "::error::invalid PR number"; exit 1 ;; esac
+
+          action=$(head -n1 ./docs-preview-build/pr/action | tr -d '[:space:]')
+          case "$action" in
+            opened|reopened|synchronize|closed) ;;
+            *) echo "::error::invalid action: $action"; exit 1 ;;
+          esac
+
+          echo "PULL_REQUEST=$number" >> "$GITHUB_OUTPUT"
+          echo "ACTION=$action" >> "$GITHUB_OUTPUT"
 
   deploy:
     needs: read-metadata
@@ -68,12 +77,27 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy PR preview
+        id: preview
         uses: rossjrw/pr-preview-action@ffa7509e91a3ec8dfc2e5536c4d5c1acdf7a6de9 #1.8.1
         with:
           source-dir: ./docs-preview-build/public
+          # previews are being served at the default `pages-base-url`
+          # if a cname is added, then the value of said custom domain must be given to `pages-base-url`
+          umbrella-dir: pr-preview # must match the /pr-preview/ baseURL the build bakes
           qr-code: false
+          comment: false
           action: ${{ needs.read-metadata.outputs.action == 'closed' && 'remove' || 'deploy' }}
           pr-number: ${{ needs.read-metadata.outputs.pr-number }}
+
+      - name: Comment preview URL
+        uses: marocchino/sticky-pull-request-comment@67d0dec7b07ed060a405f9b2a64b8ab319fdd7db # v2.9.2
+        with:
+          header: pr-preview
+          number: ${{ needs.read-metadata.outputs.pr-number }}
+          message: |
+            ${{ needs.read-metadata.outputs.action == 'closed'
+                && 'Preview removed because the pull request was closed.'
+                || format('📖 Pull request preview: {0}', steps.preview.outputs.preview-url) }}
 
   prune:
     needs: read-metadata

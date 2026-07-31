@@ -83,7 +83,7 @@ jobs:
           # HUGO_ENVIRONMENT: development
           # HUGO_ENV: development
           HUGO_PREVIEW: "true"
-          DEPLOY_PRIME_URL: "https://${{ github.repository_owner }}.github.io/academy/pr-preview/pr-${{ github.event.pull_request.number }}/"
+          DEPLOY_PRIME_URL: "/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.pull_request.number }}/"
         run: |
           npm run build:preview
           cat > public/robots.txt <<'ROBOTS'
