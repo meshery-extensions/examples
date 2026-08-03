@@ -6,6 +6,9 @@ on:
     types: [opened, synchronize, reopened, closed]
     paths:
       - 'content/**'
+      - '**.md'
+      - '**.go'
+      - 'hugo.yaml'
       - '.github/workflows/build-docs-preview.yml'
       - '.github/workflows/deploy-docs-preview.yml'
       - '.github/workflows/docs-preview-cleanup.yml'
@@ -36,6 +39,10 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
+
+      # hugo-extended is one of the dependencies which gets added onto the node_modules whenever npm install is run,
+      # so the commented out code below serves as a second installation of hugo within the runner.
+      # the commented out code is to be removed if the pr preview builds successfully.
 
       # - name: Install Hugo CLI
       #   run: |
@@ -80,8 +87,6 @@ jobs:
 
       - name: Build PR preview
         env:
-          # HUGO_ENVIRONMENT: development
-          # HUGO_ENV: development
           HUGO_PREVIEW: "true"
           DEPLOY_PRIME_URL: "/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.pull_request.number }}/"
         run: |

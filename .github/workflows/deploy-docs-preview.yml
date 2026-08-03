@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: preview-post-build-${{ github.event.workflow_run.head_branch }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   PREVIEW_RETENTION_LIMIT: 6
