@@ -1,5 +1,5 @@
 ---
-title: "test"
+title: "test the second"
 description: "Test"
 banner: "banner.svg"
 weight: 3
