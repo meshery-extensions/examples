@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-<a href="https://layer5.io/learn/academy"><img src="https://img.shields.io/badge/Meshery-Academy-00B39F?style=flat-square&logo=meshery&logoColor=white"   alt="Meshery Academy"></a>
 <a href="LICENSE"><img src="https://img.shields.io/github/license/meshery-extensions/tcslabs-academy?style=flat-square" alt="Apache 2.0 License"></a>  <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/meshery-extensions/meshery-academy">
+<a href="https://github.com/meshery/meshery/blob/master/GOVERNANCE.md#extensions-githubcommeshery-extensions"><img src="https://img.shields.io/badge/Support%20Level-Community-00B39F?style=flat-square&logo=meshery&logoColor=white"  alt="Level of support for this repo"></a>
 </p>
 
 <picture align="left">
