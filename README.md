@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-<a href="LICENSE"><img src="https://img.shields.io/github/license/meshery-extensions/tcslabs-academy?style=flat-square" alt="Apache 2.0 License"></a>  <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/meshery-extensions/meshery-academy">
+<a href="LICENSE"><img src="https://img.shields.io/github/license/meshery-extensions/tcslabs-academy?style=flat-square" alt="Apache 2.0 License"></a>  <img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/meshery-extensions/tcslabs-academy">
 <a href="https://github.com/meshery/meshery/blob/master/GOVERNANCE.md#extensions-githubcommeshery-extensions"><img src="https://img.shields.io/badge/support-community-00B39F?style=flat-square&logo=meshery&logoColor=white"  alt="Level of support for this repo"></a>
 </p>
 
@@ -62,10 +62,11 @@ Before you begin, ensure you have the following installed:
 
 | Tool | Version | Link |
 |------|---------|------|
-| **Hugo** (extended) | see go.mod| [Install Hugo](https://gohugo.io/getting-started/installing/) |
 | **Go** | see go.mod | [Install Go](https://go.dev/doc/install) |
 | **Node.js / npm** | see package.json | [Install Node.js](https://nodejs.org/) |
 | **Git** | latest | [Install Git](https://git-scm.com/) |
+
+*(Note: Hugo Extended is managed locally via npm and does not need to be installed globally.)*
 
 ---
 
@@ -87,16 +88,10 @@ make setup
 
 ### 3. Run the Site Locally
 
-_Preferred:_ Start the Hugo development server with drafts and future content enabled, using the Makefile target:
+Start the Hugo development server with drafts and future content enabled:
 
 ```bash
 make site
-```
-
-_Alternative: _ Or use the hugo CLI directly (at your own risk):
-
-```bash
-hugo server -D
 ```
 
 The site will be available at `http://localhost:1313/academy/` (or the port shown in your terminal).
@@ -108,11 +103,16 @@ The site will be available at `http://localhost:1313/academy/` (or the port show
 | Command | Description |
 |---------|-------------|
 | `make setup` | Install npm dependencies |
-| `make site`  | Build and run site locally with draft and future content enabled
-| `make build` | Build the site for production |
-| `make build-preview` | Build site for preview draft and future content enabled (honors `BASEURL`) |
-| `make clean` | Clear build cache and restart the dev server |
+| `make site` | Build and run site locally with live reload (draft and future content enabled) |
+| `make serve` | Build and serve the site once with the file watcher off (no live reload) |
+| `make build` | Build the site locally with draft and future content enabled |
+| `make build-preview` | Build the site for a deploy preview (honors `DEPLOY_PRIME_URL`) |
+| `make build-production` | Build the site for production (pass `BASE_URL=...` to set the base URL) |
+| `make clean` | Empty the build cache, reinstall dependencies, and run the site locally |
+| `make lint` | Check Markdown for linting issues |
 | `make lint-fix` | Fix Markdown linting issues with `markdownlint-cli2` |
+| `make check-links` | Check internal links in the built site |
+| `make check-deps` | Verify required commands and local dependencies are present |
 | `make check-go` | Verify Go is installed locally |
 | `make theme-update` | Update the `academy-theme` Hugo module to the latest version |
 
@@ -228,7 +228,7 @@ timeLimit: 30
 numberOfQuestions: 1
 questions:
   - id: "q1"
-    text: "DigitalOcean Academy content is authored in Markdown."
+    text: "TCS Labs Academy content is authored in Markdown."
     type: "true-false"
     marks: 1
     options:
@@ -250,27 +250,27 @@ We welcome contributions! Please follow the **fork → branch → commit → pus
 
 1. **Fork** this repository on GitHub.
 2. **Clone** your fork locally:
-   ```bash
+    ```bash
    git clone https://github.com/<your-username>/tcslabs-academy.git
    cd tcslabs-academy
-   ```
+    ```
 3. **Create a branch** for your changes:
-   ```bash
+    ```bash
    git checkout -b feature/<your-username>/<issue-number>
-   ```
+    ```
 4. **Make your changes** — add or edit content in `content/`, fix bugs, improve docs.
 5. **Preview locally** to verify:
-   ```bash
-   hugo server -D
-   ```
+    ```bash
+   make site
+    ```
 6. **Commit** with a sign-off (required by DCO):
-   ```bash
+    ```bash
    git commit -s -m "docs: describe your change"
-   ```
+    ```
 7. **Push** to your fork:
-   ```bash
+    ```bash
    git push origin feature/<your-username>/<issue-number>
-   ```
+    ```
 8. **Open a Pull Request** against the `master` branch of this repository.
 
 > For a detailed guide on the fork-and-pull workflow, see [CONTRIBUTING-gitflow.md](./CONTRIBUTING-gitflow.md).
@@ -295,7 +295,7 @@ Find other related academies by browsing the "[meshery-academy](https://github.c
 This repository is available as open source under the terms of the [Apache 2.0 License](./LICENSE).
 
 ---
-       
+
 ## 👥 Community & Contributions
 
 We warmly welcome all contributors! As you get started, please review this project's [contributing guidelines](CONTRIBUTING.md).
@@ -329,4 +329,3 @@ Contributors are expected to follow the [CNCF Code of Conduct](https://github.co
 </p>
 
 <br clear="both" />
-
