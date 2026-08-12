@@ -31,7 +31,7 @@ jobs:
           egress-policy: audit
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: docs-preview-build
           path: docs-preview-build
@@ -68,7 +68,7 @@ jobs:
           persist-credentials: true
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: docs-preview-build
           path: docs-preview-build
@@ -96,7 +96,8 @@ jobs:
           message: |
             ${{ needs.read-metadata.outputs.action == 'closed'
             && 'Preview removed because the pull request was closed.'
-            || format('📖 Pull request preview: {0}', steps.preview.outputs.preview-url) }}
+            || format('🚀 Preview deployment: {0}
+            > *Note: Preview may take a moment (GitHub Pages deployment in progress). Please wait and refresh. Track deployment [here](https://github.com/{1}/actions/workflows/pages/pages-build-deployment)*', steps.preview.outputs.preview-url, github.repository) }}
 
   prune:
     needs: read-metadata
@@ -107,7 +108,7 @@ jobs:
       removed_prs_json: ${{ steps.prune-previews.outputs.removed_prs_json }}
     steps:
       - name: Checkout gh-pages for preview retention
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: gh-pages
           fetch-depth: 0
@@ -201,7 +202,7 @@ jobs:
           fi
 
       - name: Comment on pruned previews
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
           REMOVED_PRS_JSON: ${{ steps.prune-previews.outputs.removed_prs_json }}
           PREVIEW_RETENTION_LIMIT: ${{ env.PREVIEW_RETENTION_LIMIT }}

@@ -15,7 +15,7 @@ params:
 module:
   hugoVersion:
     extended: true
-    min: 0.156.0
+    min: 0.158.0
   imports:
 
     # used to source the base theme for academy.
